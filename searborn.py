@@ -36,7 +36,7 @@ for t in listatickers:
 
 #Calcular el promedio, la desviación estandar valores minimos y maximos, para ello usamos el modulo describe()
 
-print(matrizPrecios.describe())
+#print(matrizPrecios.describe())
 
 """
 Count : Para todos los tickets hay 1259  datos disponibles
@@ -52,24 +52,32 @@ max: el valor máximo
 #Esta línea importa el módulo pyplot de matplotlib, una biblioteca de Python utilizada para crear gráficos y visualizaciones.
 import matplotlib.pyplot as plt
 
-# Graficar precios ajustados
+import seaborn as sns
 
-#Aquí se crea una nueva figura con un tamaño específico de 14 pulgadas de ancho y 7 pulgadas de alto. 
-# Esto define el área de dibujo para el gráfico.
-plt.figure(figsize=(14, 7))
-for ticker in listatickers:
-    matrizPrecios[ticker].plot(label=ticker)
-# Para cada ticker en listatickers, se selecciona la columna correspondiente en matrizPrecios y se grafica usando el método .plot(). 
-# El argumento label=ticker añade una etiqueta al gráfico para identificar cada línea.    
-    
-    
-    
-plt.title('Precios Ajustados de las Empresas') #Esta línea añade el título "Precios Ajustados de las Empresas" al gráfico.
+# Crear un DataFrame con los datos de AAPL y MSFT
+data_comparacion = matrizPrecios[['AAPL', 'MSFT']]
 
-#Estas líneas añaden etiquetas a los ejes X e Y. El eje X está etiquetado como "Fecha" y el eje Y como "Precio Ajustado".
-plt.xlabel('Fecha')
-plt.ylabel('Precio Ajustado')
+# Creamos un gráfico de dispersión (scatter plot) para ver la relación entre ambos precios
+plt.figure(figsize=(10,6))
+sns.scatterplot(x='AAPL', y='MSFT', data=data_comparacion)
 
-plt.legend()
-plt.show() #Finalmente, esta línea muestra el gráfico en pantalla
+# Títulos y etiquetas
+plt.title('Relación entre Precios Ajustados de AAPL y MSFT')
+plt.xlabel('Precio Ajustado AAPL')
+plt.ylabel('Precio Ajustado MSFT')
 
+# Mostrar el gráfico
+plt.show()
+
+
+# Crear un histograma para la distribución de precios de TSLA
+plt.figure(figsize=(10,6))
+sns.histplot(matrizPrecios['TSLA'], bins=30, kde=True)
+
+# Títulos y etiquetas
+plt.title('Distribución de Precios Ajustados de Tesla (TSLA)')
+plt.xlabel('Precio Ajustado TSLA')
+plt.ylabel('Frecuencia')
+
+# Mostrar el gráfico
+plt.show()
